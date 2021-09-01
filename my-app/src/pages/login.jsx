@@ -2,8 +2,6 @@
 import React from "react";
 import { Grid, Paper, Avatar, TextField, Button, Typography, Link} from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import * as Yup from 'yup'
 const Login = () => {
@@ -26,6 +24,10 @@ const validationSchema=Yup.object().shape({
 })
 const onSubmit=(values,props)=>{
   console.log(values)
+  setTimeout(()=>{
+    props.resetForm()
+    props.setSubmitting(false)
+  },2000)
   console.log(props)
   };
   return (
@@ -58,11 +60,9 @@ const onSubmit=(values,props)=>{
           required
           helperText={<ErrorMessage name="password"/>}
         />
-        <Field as={FormControlLabel} 
-          control={<Checkbox name="checkedB" color="primary" />}
-          label="Remember me"
-        />
-        <Button type="submit" color="primary" variant="contained" style={btstyle} fullWidth> Sign in</Button>
+        <Button type="submit" color="primary" variant="contained"  disabled={props.isSubmitting}
+        style={btstyle} fullWidth> {props.isSubmitting?"Loading":"Sign in"}</Button>
+          
             </Form>
           )
 }
