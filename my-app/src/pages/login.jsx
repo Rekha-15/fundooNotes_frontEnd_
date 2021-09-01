@@ -27,7 +27,6 @@ const onSubmit=(values,props)=>{
     props.resetForm()
     props.setSubmitting(false)
   },2000)
-  console.log(props)
   };
   return (
     <Grid>
