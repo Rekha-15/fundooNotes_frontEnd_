@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import React from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
 import AddCircleOutLineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
@@ -8,9 +8,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import {Link} from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage} from 'formik';
 import { FormHelperText } from '@material-ui/core';
-//import { values } from 'lodash';
 import * as Yup from 'yup'
 const SignUp = () => {
     const paperStyle = { padding: '30px 20px', width: 300, margin: "20px auto" }
@@ -30,7 +30,7 @@ const SignUp = () => {
     }
     const validationSchema=Yup.object().shape({
         firstName:Yup.string().min(3, "first Name is too short minimum 3 Char is required").required("Required"),
-        lastName:Yup.string().min(3, "lasrst Name is too short minimum 3 Char is required").required("Required"),
+        lastName:Yup.string().min(3, "last Name is too short minimum 3 Char is required").required("Required"),
         emalId:Yup.string().email('please enter valid email').required("Required"),
         gender:Yup.string().oneOf(["male", "female"], "Required").required("Required"),
         phoneNumber:Yup.number().typeError('Enter valid phone Number').required("Required"),
@@ -55,7 +55,7 @@ const SignUp = () => {
                     <h2 style={headerStyle}>Sign Up</h2>
                     <Typography variant='caption' gutterBottom>Please fill this form to create an account !</Typography>
                 </Grid>
-                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit="onSubmit">
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                     {(props)=>(
                         <Form>
                         <Field as={TextField} fullWidth name="firstName" label='firstName' 
@@ -87,6 +87,11 @@ const SignUp = () => {
                         <Button type='submit' variant='contained' color='primary' style={btstyle} fullWidth>Sign Up</Button>
                         {/* <Button type="submit" color="primary" variant="contained"  disabled={props.isSubmitting}
                          style={btstyle} fullWidth> {props.isSubmitting?"Loading":"Sign in"}</Button> */}
+                         <Typography>Already have an account?
+                            <Link to = '/login'>
+                            Login
+                            </Link>
+                        </Typography>
                     </Form>
                     )}
                 </Formik>

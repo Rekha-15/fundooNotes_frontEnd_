@@ -1,15 +1,10 @@
 import React from "react";
-import { Grid, Paper, Avatar, TextField, Button, Typography, Link} from "@material-ui/core";
+import { Grid, Paper, Avatar, TextField, Button, Typography} from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {Formik, Form, Field, ErrorMessage} from 'formik'
+import {Link} from 'react-router-dom'
 import * as Yup from 'yup'
 const Login = () => {
-  const paperStyle = {
-    padding: 20,
-    height: "70vh",
-    width: 280,
-    margin: "20px auto",
-  };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btstyle = { margin: "8px 0" };
   const initialValues ={
@@ -18,7 +13,7 @@ const Login = () => {
 } ;
 const validationSchema=Yup.object().shape({
   emailId:Yup.string().email('please enter valid email').required("Required"),
-  password:Yup.string().required("Required" )
+  password:Yup.string().required("Required")
 
 })
 const onSubmit=(values,props)=>{
@@ -30,7 +25,7 @@ const onSubmit=(values,props)=>{
   };
   return (
     <Grid>
-      <Paper elevation={10} style={paperStyle}>
+      <Paper elevation={20} className="paperStyle">
         <Grid align="center">
           <Avatar style={avatarStyle}>
             <LockOutlinedIcon />
@@ -59,8 +54,12 @@ const onSubmit=(values,props)=>{
           helperText={<ErrorMessage name="password"/>}
         />
         <Button type="submit" color="primary" variant="contained"  disabled={props.isSubmitting}
-        style={btstyle} fullWidth> {props.isSubmitting?"Loading":"Sign in"}</Button>
-          
+        style={btstyle} fullWidth> {props.isSubmitting?"Loading":"Sign in"}</Button> 
+        <Typography>Create a new account? 
+            <Link to = '/SignUp'>
+            Sign Up
+            </Link>
+        </Typography>  
             </Form>
           )
 }
@@ -68,11 +67,11 @@ const onSubmit=(values,props)=>{
         <Typography>
           <Link href="#">Forgot password</Link>
         </Typography>
-        <Typography> Do you have an account ?
+         {/* <Typography> Do you have an account ?
             <Link href="#">
                 Sign Up
             </Link>
-        </Typography>
+        </Typography> */}
       </Paper>
     </Grid>
   );
