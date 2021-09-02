@@ -7,17 +7,13 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+//import Checkbox from '@material-ui/core/Checkbox';
 import {Link} from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage} from 'formik';
 import { FormHelperText } from '@material-ui/core';
 import * as Yup from 'yup'
 import './SignUp.scss'
 const SignUp = () => {
-    //const paperStyle = { padding: '30px 20px', width: 300, margin: "20px auto" }
-   // const headerStyle = { margin: 0 }
-   // const avatarStyle = { backgroundColor: '#1bbd7e' }
-   // const btstyle = { margin: "12px 0" };
     const marginTop = { marginTop: 10 }
     const initialValues={
         firstName:'',
@@ -27,17 +23,17 @@ const SignUp = () => {
         phoneNumber:'',
         password:'',
         confirmPassword:'',
-        termsAndCondition:false
+        // termsAndCondition:false
     }
     const validationSchema=Yup.object().shape({
         firstName:Yup.string().min(3, "first Name is too short minimum 3 Char is required").required("Required"),
         lastName:Yup.string().min(3, "last Name is too short minimum 3 Char is required").required("Required"),
         emalId:Yup.string().email('please enter valid email').required("Required"),
         gender:Yup.string().oneOf(["male", "female"], "Required").required("Required"),
-        phoneNumber:Yup.number().typeError('Enter valid phone Number').required("Required"),
-        password:Yup.string().min(8,"Password minimum length should be 8").required("Required" ),
-        confirmPassword:Yup.string().oneOf([Yup.ref('password')],"Password doesn't matched").required("Required" ),
-        termsAndCondition:Yup.string().oneOf(["true"], "Accept terms & condition")   
+        phoneNumber:Yup.string().matches(/^[0-9]+$/, "Must be only digits").min(10, 'Please enter valid phone number')
+        .max(10, 'Please enter 10 digits phone number without Space').required("Required"),
+        password:Yup.string().min(8,"Use 8 or more characters with a mix of letters, numbers & symbols").required("Required" ),
+        confirmPassword:Yup.string().oneOf([Yup.ref('password')],"Password doesn't matched").required("Required" )   
       })
       const onSubmit=(values,props)=>{
         console.log(values)
@@ -81,11 +77,11 @@ const SignUp = () => {
                         placeholder="Provide your password" helperText={<ErrorMessage name="password"/>}/>
                         <Field as={TextField} fullWidth name="confirmPassword" type="password" label='Confirm Password' 
                         placeholder="Confirm your password" helperText={<ErrorMessage name="confirmPassword"/>}/>
-                        <FormControlLabel
+                        {/* <FormControlLabel
                             control={<Field as={Checkbox} name="termsAndCondition" />}
                             label="I accept the terms and condition."
                         />
-                        <FormHelperText><ErrorMessage name="termsAndCondition"/></FormHelperText> 
+                        <FormHelperText><ErrorMessage name="termsAndCondition"/></FormHelperText>  */}
                         {/* <Button type='submit' variant='contained' color='primary' style={btstyle} fullWidth>Sign Up</Button> */}
                         <Button type="submit" variant="contained"  disabled={props.isSubmitting}
                          className="btstyle" fullWidth> {props.isSubmitting?"Loading":"Sign in"}</Button>

@@ -6,8 +6,6 @@ import {Link} from 'react-router-dom'
 import * as Yup from 'yup'
 import './login.scss'
 const Login = (props) => {
-  //const avatarStyle = { backgroundColor: "#1bbd7e" };
-  //const btstyle = { margin: "8px 0" };
   const initialValues ={
     emailId:'',
     password:''
@@ -26,13 +24,13 @@ const onSubmit=(values,props)=>{
   };
   return (
     <Grid>
-      <Paper elevation={20} className="paperStyle">
+      <Paper elevation={20} className="paperStyleLogin">
         <Grid align="center">
-          <Avatar className="avatarStyle">
+          <Avatar className="avatarStyleLogin">
             <LockOutlinedIcon />
           </Avatar>
-          <h2 className="header" >FundooNotes App</h2>
-          <h2 className="header" >sign In</h2>
+          <h2 className="headerLogin" >FundooNotes App</h2>
+          <h2 className="headerLogin" >sign In</h2>
         </Grid>
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
           {(props)=>(
@@ -71,11 +69,6 @@ const onSubmit=(values,props)=>{
         <Typography>
           <Link href="#">Forgot password</Link>
         </Typography>
-         {/* <Typography> Do you have an account ?
-            <Link href="#">
-                Sign Up
-            </Link>
-        </Typography> */}
       </Paper>
     </Grid>
   );
