@@ -27,9 +27,10 @@ const onSubmit=(values,props)=>{
     <Grid>
       <Paper elevation={20} className="paperStyle">
         <Grid align="center">
-          <Avatar style={avatarStyle}>
+          <Avatar> 
             <LockOutlinedIcon />
           </Avatar>
+          <h2 className="header" >FundooNotes App</h2>
           <h2>sign In</h2>
         </Grid>
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
@@ -37,6 +38,7 @@ const onSubmit=(values,props)=>{
             <Form>
               {console.log(props)}
         <Field as={TextField}
+        className="EmailFieldStyle"
           label="email Id"
           name="emailId"
           placeholder="Enter user emailId"
@@ -45,6 +47,7 @@ const onSubmit=(values,props)=>{
           helperText={<ErrorMessage name="emailId"/>}
         />
         <Field as={TextField}
+        className="PasswordStyle"
           label="Password"
           name="password"
           placeholder="Enter password"
@@ -53,8 +56,8 @@ const onSubmit=(values,props)=>{
           required
           helperText={<ErrorMessage name="password"/>}
         />
-        <Button type="submit" color="primary" variant="contained"  disabled={props.isSubmitting}
-        style={btstyle} fullWidth> {props.isSubmitting?"Loading":"Sign in"}</Button> 
+        <Button className="buttonMargin" type="submit" variant="contained"  disabled={props.isSubmitting}
+        fullWidth> {props.isSubmitting?"Loading":"Sign in"  }</Button> 
         <Typography>Create a new account? 
             <Link to = '/SignUp'>
             Sign Up
