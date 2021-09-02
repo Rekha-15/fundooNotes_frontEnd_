@@ -12,11 +12,12 @@ import {Link} from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage} from 'formik';
 import { FormHelperText } from '@material-ui/core';
 import * as Yup from 'yup'
+import './SignUp.scss'
 const SignUp = () => {
-    const paperStyle = { padding: '30px 20px', width: 300, margin: "20px auto" }
-    const headerStyle = { margin: 0 }
-    const avatarStyle = { backgroundColor: '#1bbd7e' }
-    const btstyle = { margin: "12px 0" };
+    //const paperStyle = { padding: '30px 20px', width: 300, margin: "20px auto" }
+   // const headerStyle = { margin: 0 }
+   // const avatarStyle = { backgroundColor: '#1bbd7e' }
+   // const btstyle = { margin: "12px 0" };
     const marginTop = { marginTop: 10 }
     const initialValues={
         firstName:'',
@@ -47,12 +48,13 @@ const SignUp = () => {
         };
     return (
         <Grid>
-            <Paper elevation={20} style={paperStyle}>
+            <Paper elevation={20} className="paperStyle">
                 <Grid align='center'>
-                    <Avatar style={avatarStyle}>
+                    <Avatar className="avatarStyle">
                         <AddCircleOutLineOutlinedIcon />
                     </Avatar>
-                    <h2 style={headerStyle}>Sign Up</h2>
+                    <h2 className="header" >FundooNotes App</h2>
+                    <h2 className="header">Sign Up</h2>
                     <Typography variant='caption' gutterBottom>Please fill this form to create an account !</Typography>
                 </Grid>
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
@@ -84,9 +86,9 @@ const SignUp = () => {
                             label="I accept the terms and condition."
                         />
                         <FormHelperText><ErrorMessage name="termsAndCondition"/></FormHelperText> 
-                        <Button type='submit' variant='contained' color='primary' style={btstyle} fullWidth>Sign Up</Button>
-                        {/* <Button type="submit" color="primary" variant="contained"  disabled={props.isSubmitting}
-                         style={btstyle} fullWidth> {props.isSubmitting?"Loading":"Sign in"}</Button> */}
+                        {/* <Button type='submit' variant='contained' color='primary' style={btstyle} fullWidth>Sign Up</Button> */}
+                        <Button type="submit" variant="contained"  disabled={props.isSubmitting}
+                         className="btstyle" fullWidth> {props.isSubmitting?"Loading":"Sign in"}</Button>
                          <Typography>Already have an account?
                             <Link to = '/login'>
                             Login
