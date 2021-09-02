@@ -4,9 +4,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import {Link} from 'react-router-dom'
 import * as Yup from 'yup'
-const Login = () => {
-  const avatarStyle = { backgroundColor: "#1bbd7e" };
-  const btstyle = { margin: "8px 0" };
+import './login.scss'
+const Login = (props) => {
+  //const avatarStyle = { backgroundColor: "#1bbd7e" };
+  //const btstyle = { margin: "8px 0" };
   const initialValues ={
     emailId:'',
     password:''
@@ -27,11 +28,11 @@ const onSubmit=(values,props)=>{
     <Grid>
       <Paper elevation={20} className="paperStyle">
         <Grid align="center">
-          <Avatar> 
+          <Avatar className="avatarStyle">
             <LockOutlinedIcon />
           </Avatar>
           <h2 className="header" >FundooNotes App</h2>
-          <h2>sign In</h2>
+          <h2 className="header" >sign In</h2>
         </Grid>
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
           {(props)=>(
@@ -56,13 +57,13 @@ const onSubmit=(values,props)=>{
           required
           helperText={<ErrorMessage name="password"/>}
         />
-        <Button className="buttonMargin" type="submit" variant="contained"  disabled={props.isSubmitting}
+        <Button className="buttonMargin" color = "primary" type="submit" variant="contained"  disabled={props.isSubmitting}
         fullWidth> {props.isSubmitting?"Loading":"Sign in"  }</Button> 
-        <Typography>Create a new account? 
+        <Typography className = "textspace">Create a new account? 
             <Link to = '/SignUp'>
             Sign Up
             </Link>
-        </Typography>  
+        </Typography> 
             </Form>
           )
 }
