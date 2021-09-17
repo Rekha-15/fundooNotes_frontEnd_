@@ -138,11 +138,11 @@ const SignUp = () => {
                                        onClick={onSubmit}
                                         type="submit"
                                         variant="contained"
-                                        disabled={props.isSubmitting}
+                                       // disabled={props.isSubmitting}
                                         className="register-form-button"
                                         fullWidth
                                     >
-                                        {props.isSubmitting ? "Loading" : "Register"}
+                                        Register
                                     </Button>
                                 </Grid>
                             </Form>
