@@ -1,101 +1,176 @@
-
 import React from 'react'
-import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
-import AddCircleOutLineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+import { Grid, Paper, Typography, TextField, Button } from '@material-ui/core'
+//import AddCircleOutLineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+//import Radio from '@material-ui/core/Radio';
+//import RadioGroup from '@material-ui/core/RadioGroup';
+//import FormControlLabel from '@material-ui/core/FormControlLabel';
+//import FormControl from '@material-ui/core/FormControl';
+//import FormLabel from '@material-ui/core/FormLabel';
 //import Checkbox from '@material-ui/core/Checkbox';
-import {Link} from 'react-router-dom'
-import { Formik, Field, Form, ErrorMessage} from 'formik';
-import { FormHelperText } from '@material-ui/core';
+import { Link } from 'react-router-dom'
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+//import { FormHelperText } from '@material-ui/core';
 import * as Yup from 'yup'
 import './SignUp.scss'
+import { UserNode } from '../Services/userNode';
+const userNode = new UserNode ()
 const SignUp = () => {
-    const marginTop = { marginTop: 10 }
-    const initialValues={
-        firstName:'',
-        lastName:'',
-        emalId:'',
-        gender:'',
-        phoneNumber:'',
-        password:'',
-        confirmPassword:'',
+    //const marginTop = { marginTop: 10 }
+    const initialValues = {
+        firstName: '',
+        lastName: '',
+        emailId: '',
+        password: '',
+        confirmPassword: '',
         // termsAndCondition:false
     }
-    const validationSchema=Yup.object().shape({
-        firstName:Yup.string().min(3, "first Name is too short minimum 3 Char is required").required("Required"),
-        lastName:Yup.string().min(3, "last Name is too short minimum 3 Char is required").required("Required"),
-        emalId:Yup.string().email('please enter valid email').required("Required"),
-        gender:Yup.string().oneOf(["male", "female"], "Required").required("Required"),
-        phoneNumber:Yup.string().matches(/^[0-9]+$/, "Must be only digits").min(10, 'Please enter valid phone number')
-        .max(10, 'Please enter 10 digits phone number without Space').required("Required"),
-        password:Yup.string().min(8,"Use 8 or more characters with a mix of letters, numbers & symbols").required("Required" ),
-        confirmPassword:Yup.string().oneOf([Yup.ref('password')],"Password doesn't matched").required("Required" )   
-      })
-      const onSubmit=(values,props)=>{
+    const validationSchema = Yup.object().shape({
+        firstName: Yup.string().min(3, "first Name is too short minimum 3 Char is required").required("Required"),
+        lastName: Yup.string().min(3, "last Name is too short minimum 3 Char is required").required("Required"),
+        emailId: Yup.string().email('please enter valid email').required("Required"),
+        // gender: Yup.string().oneOf(["male", "female"], "Required").required("Required"),
+        // phoneNumber: Yup.string().matches(/^[0-9]+$/, "Must be only digits").min(10, 'Please enter valid phone number')
+        //     .max(10, 'Please enter 10 digits phone number without Space').required("Required"),
+        password: Yup.string().min(8, "Use 8 or more characters with a mix of letters, numbers & symbols").required("Required"),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password')], "Password doesn't matched").required("Required")
+    })
+    const onSubmit = (values, props) => {
         console.log(values)
-        setTimeout(()=>{
-          props.resetForm()
-          props.setSubmitting(false)
-        },2000)
-        };
+       const userDetails = { 
+           firstName : values.firstName,
+           lastName : values.lastName,
+           emailId : values.emailId,
+           password : values.password,
+          // confirmPassword : values.confirmPassword
+       }
+       console.log("Message from onSubmit", userDetails)
+       userNode.registration(userDetails)
+       .then(res => {
+           alert('Data is submitted')
+       }).catch(error => {
+           console.log(error)
+       })
+        // setTimeout(() => {
+        //     props.resetForm()
+        //     props.setSubmitting(false)
+        // }, 2000)
+    }
+
     return (
-        <Grid>
-            <Paper elevation={20} className="paperStyle">
-                <Grid align='center'>
-                    <Avatar className="avatarStyle">
-                        <AddCircleOutLineOutlinedIcon />
-                    </Avatar>
-                    <h2 className="header" >FundooNotes App</h2>
-                    <h2 className="header">Sign Up</h2>
-                    <Typography variant='caption' gutterBottom>Please fill this form to create an account !</Typography>
-                </Grid>
-                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-                    {(props)=>(
-                        <Form>
-                        <Field as={TextField} fullWidth name="firstName" label='firstName' 
-                        placeholder="Enter your First Name" helperText={<ErrorMessage name="firstName"/>} />
-                        <Field as={TextField} fullWidth name="lastName" label='lastName' 
-                        placeholder="Enter your Last Name" helperText={<ErrorMessage name="lastName"/>} />
-                        <Field as={TextField} fullWidth name="emalId"  label='Email' 
-                        placeholder="Please enter valid Email Id" helperText={<ErrorMessage name="emalId"/>} />
-                        <FormControl component="fieldset" style={marginTop}>
-                            <FormLabel component="legend">Gender</FormLabel>
-                            <Field as ={RadioGroup} aria-label="gender" name="gender" style={{ display: 'initial' }}>
-                                <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                <FormControlLabel value="other" control={<Radio />} label="Other" />
-                            </Field>
-                        </FormControl>
-                        <FormHelperText><ErrorMessage name="gender"/></FormHelperText> 
-                        <Field as={TextField} fullWidth name="phoneNumber" label='Phone Number' 
-                        placeholder="Enter your valid Phone Number" helperText={<ErrorMessage name="phoneNumber"/>} />
-                        <Field as={TextField} fullWidth name="password" type="password" label='Password' 
-                        placeholder="Provide your password" helperText={<ErrorMessage name="password"/>}/>
-                        <Field as={TextField} fullWidth name="confirmPassword" type="password" label='Confirm Password' 
-                        placeholder="Confirm your password" helperText={<ErrorMessage name="confirmPassword"/>}/>
-                        {/* <FormControlLabel
-                            control={<Field as={Checkbox} name="termsAndCondition" />}
-                            label="I accept the terms and condition."
-                        />
-                        <FormHelperText><ErrorMessage name="termsAndCondition"/></FormHelperText>  */}
-                        {/* <Button type='submit' variant='contained' color='primary' style={btstyle} fullWidth>Sign Up</Button> */}
-                        <Button type="submit" variant="contained"  disabled={props.isSubmitting}
-                         className="btstyle" fullWidth> {props.isSubmitting?"Loading":"Sign in"}</Button>
-                         <Typography>Already have an account?
-                            <Link to = '/login'>
-                            Login
-                            </Link>
-                        </Typography>
-                    </Form>
-                    )}
-                </Formik>
+        <>
+        <Grid className="formStyle">
+            <Paper className="register-container paperStyle">
+                <div className="register-form">
+                    <h3 className="header">
+                        <h3 className="header">
+                            <span className="fun1">F</span>
+                            <span className="fun2">u</span>
+                            <span className="fun3">n</span>
+                            <span className="fun4">d</span>
+                            <span className="fun5">o</span>
+                            <span className="fun6">o</span>
+                            <span className="fun1">N</span>
+                            <span className="fun2">o</span>
+                            <span className="fun3">t</span>
+                            <span className="fun4">e</span>
+                            <span className="fun5">s</span>
+                        </h3>
+                        <span className="headerStyle"> <h5 >Please fill form to create an account !</h5></span>
+                    </h3>
+                    
+                    <Formik initialValues={initialValues}  onSubmit={onSubmit} validationSchema={validationSchema}>
+                        {(props) => (
+                            <Form className="register-form-inputs" data-testid="form">
+                                <Grid container spacing={5} className="register-form-element">
+                                    <Grid item xs={16} sm={6}>
+                                        <Field
+                                            className="register-form-inputs"
+                                            as={TextField}
+                                            label="First Name"
+                                            name="firstName"
+                                            placeholder="Enter First Name"
+                                            variant="outlined"
+                                            fullWidth
+                                            helperText={<ErrorMessage name="firstName"/>}/>
+                                    </Grid>
+                                    <Grid item xs={16} sm={6}>
+                                        <Field
+                                            className="register-form-inputs"
+                                            as={TextField}
+                                            label="Last Name"
+                                            name="lastName"
+                                            placeholder="Enter Last Name"
+                                            variant="outlined"
+                                            fullWidth
+                                            helperText={<ErrorMessage name="lastName"/>}/>
+                                        </Grid>
+                                    </Grid>
+                                <Grid container spacing={1} className="register-form-element">
+                                    <Field
+                                        className="register-form-inputs"
+                                        spacing={3}
+                                        as={TextField}
+                                        label="Email Address"
+                                        name="emailId"
+                                        placeholder="Enter Email"
+                                        variant="outlined"
+                                        fullWidth
+                                        helperText={<ErrorMessage name="emailId"/>}/>
+                                </Grid>
+                                <Grid container spacing={1} className="register-form-element">
+                                    <Grid item xs={12} sm={6}>
+                                        <Field
+                                            className="register-form-inputs"
+                                            as={TextField}
+                                            label="Password"
+                                            name="password"
+                                            placeholder="Enter password"
+                                            variant="outlined"
+                                            type="password"
+                                            fullWidth
+                                            helperText={<ErrorMessage name="password"/>}/>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <Field
+                                            className="register-form-inputs"
+                                            as={TextField}
+                                            label="Confirm Password"
+                                            name="confirmPassword"
+                                            placeholder="Enter password"
+                                            variant="outlined"
+                                            type="password"
+                                            fullWidth
+                                            helperText={<ErrorMessage name="confirmPassword"/>}/>
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={1} className="register-form-element submit-button">
+                                    <Button
+                                       onClick={onSubmit}
+                                        type="submit"
+                                        variant="contained"
+                                        //disabled={props.isSubmitting}
+                                        className="register-form-button"
+                                        fullWidth
+                                    >
+                                        {props.isSubmitting ? "Loading" : "Register"}
+                                    </Button>
+                                </Grid>
+                            </Form>
+                        )}
+                    </Formik>
+                    <Typography className="signInlink">
+                        <Link to="/login">Sign in instead</Link>
+                    </Typography>
+                </div>
+                <div className="register-avatar">
+                    <img src="https://ssl.gstatic.com/accounts/signup/glif/account.svg" alt=""></img>
+                </div>
             </Paper>
-        </Grid>
-    )
-}
+        </Grid >
+        </>
+    );
+};
+
+
 
 export default SignUp;
