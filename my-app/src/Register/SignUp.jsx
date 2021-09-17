@@ -23,14 +23,18 @@ const SignUp = () => {
         //     .max(10, 'Please enter 10 digits phone number without Space').required("Required"),
         password: Yup.string().min(8, "Use 8 or more characters with a mix of letters, numbers & symbols").required("Required"),
         confirmPassword: Yup.string().oneOf([Yup.ref('password')], "Password doesn't matched").required("Required")
-    })
+    });
+
+    // const handleLogin=()=>{
+    //     history.push('/login');
+    // };
     const onSubmit = (values, props) => {
         console.log(values)
         if(values && !values.firstName && !values.lastName) return 
        const userDetails = { 
            firstName : values.firstName,
            lastName : values.lastName,
-           emailId : values.emailId,
+           email : values.emailId,
            password : values.password,
           // confirmPassword : values.confirmPassword
        }
