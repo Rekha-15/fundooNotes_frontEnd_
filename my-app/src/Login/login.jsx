@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid, Paper, TextField, Button, Typography} from "@material-ui/core";
-//import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import {Link} from 'react-router-dom'
 import * as Yup from 'yup'
@@ -27,9 +26,6 @@ const onSubmit=(values,props)=>{
     <Grid className="formStyle">
       <Paper className="login-container login-paper">
         <div  align="center" className="login-form-container">
-        {/* <Avatar className='avatarStyle'>
-                  <LockOutlinedIcon />
-                </Avatar> */}
           <h1 className="header">
             <span className="fun1">F</span>
             <span className="fun2">u</span> 
@@ -58,7 +54,6 @@ const onSubmit=(values,props)=>{
           placeholder="Enter user emailId"
           variant="outlined"
           fullWidth
-          required
           helperText={<ErrorMessage name="emailId"/>}
         />
         <Field 
@@ -70,7 +65,6 @@ const onSubmit=(values,props)=>{
           variant="outlined"
           type="password"
           fullWidth
-          required
           helperText={<ErrorMessage name="password"/>}
         />
         <Button className="buttonMargin" color = "primary" type="submit" variant="contained"  disabled={props.isSubmitting}

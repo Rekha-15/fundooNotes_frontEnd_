@@ -63,13 +63,7 @@
 
 .EmailFieldStyle {
     min-height: 90px;
-}
-
-.paperStyleLogin{
-    padding: 20px ;
-    width:300px ;
-    height: 600px  ;
-    margin: 20px auto ;
+    margin-bottom: 0px;
 }
 
 .buttonMargin {
@@ -78,17 +72,9 @@
     background-color: blue !important  ;
 }
 
-.headerLogin {
-    margin-top :5px ;
-    margin:5px ;
-}
-
-.EmailFieldStyle{
-    margin-bottom: 20px !important;
-}
-
 .PasswordStyle{
     margin-bottom: 20px !important;
+    margin-top:0px;
 }
 
 .textspace{
@@ -141,6 +127,10 @@
         text-align: center;
         padding: 50px !important;
     }
+}
+
+h2, h1{
+    margin: 0px;
 }
 
 

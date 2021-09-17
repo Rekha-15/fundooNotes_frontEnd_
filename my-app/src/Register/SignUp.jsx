@@ -1,28 +1,18 @@
 import React from 'react'
 import { Grid, Paper, Typography, TextField, Button } from '@material-ui/core'
-//import AddCircleOutLineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-//import Radio from '@material-ui/core/Radio';
-//import RadioGroup from '@material-ui/core/RadioGroup';
-//import FormControlLabel from '@material-ui/core/FormControlLabel';
-//import FormControl from '@material-ui/core/FormControl';
-//import FormLabel from '@material-ui/core/FormLabel';
-//import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-//import { FormHelperText } from '@material-ui/core';
 import * as Yup from 'yup'
 import './SignUp.scss'
 import { UserNode } from '../Services/userNode';
 const userNode = new UserNode ()
 const SignUp = () => {
-    //const marginTop = { marginTop: 10 }
     const initialValues = {
         firstName: '',
         lastName: '',
         emailId: '',
         password: '',
         confirmPassword: '',
-        // termsAndCondition:false
     }
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().min(3, "first Name is too short minimum 3 Char is required").required("Required"),
@@ -36,6 +26,7 @@ const SignUp = () => {
     })
     const onSubmit = (values, props) => {
         console.log(values)
+        if(values && !values.firstName && !values.lastName) return 
        const userDetails = { 
            firstName : values.firstName,
            lastName : values.lastName,
@@ -50,10 +41,6 @@ const SignUp = () => {
        }).catch(error => {
            console.log(error)
        })
-        // setTimeout(() => {
-        //     props.resetForm()
-        //     props.setSubmitting(false)
-        // }, 2000)
     }
 
     return (
@@ -80,7 +67,7 @@ const SignUp = () => {
                     
                     <Formik initialValues={initialValues}  onSubmit={onSubmit} validationSchema={validationSchema}>
                         {(props) => (
-                            <Form className="register-form-inputs" data-testid="form">
+                            <Form className="register-form-inputs">
                                 <Grid container spacing={5} className="register-form-element">
                                     <Grid item xs={16} sm={6}>
                                         <Field
@@ -108,7 +95,6 @@ const SignUp = () => {
                                 <Grid container spacing={1} className="register-form-element">
                                     <Field
                                         className="register-form-inputs"
-                                        spacing={3}
                                         as={TextField}
                                         label="Email Address"
                                         name="emailId"
@@ -148,7 +134,7 @@ const SignUp = () => {
                                        onClick={onSubmit}
                                         type="submit"
                                         variant="contained"
-                                        //disabled={props.isSubmitting}
+                                        disabled={props.isSubmitting}
                                         className="register-form-button"
                                         fullWidth
                                     >
