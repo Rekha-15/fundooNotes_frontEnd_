@@ -15,8 +15,8 @@ const Login = (props) => {
     password:''
 } ;
 const validationSchema=Yup.object().shape({
-  emailId:Yup.string().email('please enter valid email').required("required"),
-  password:Yup.string().required("required")
+  emailId:Yup.string().email('please enter valid email').required("Enter a email address"),
+  password:Yup.string().required("Enter a password")
 
 });
 
