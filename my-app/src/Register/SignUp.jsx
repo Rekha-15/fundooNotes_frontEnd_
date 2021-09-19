@@ -18,14 +18,14 @@ const SignUp = () => {
         confirmPassword: '',
     }
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().min(3, "first Name is too short minimum 3 Char is required").required("required"),
-        lastName: Yup.string().min(3, "last Name is too short minimum 3 Char is required").required("required"),
-        emailId: Yup.string().email('please enter valid email').required("required"),
+        firstName: Yup.string().min(3, "first Name is too short minimum 3 Char is required").required("Fisrts name required"),
+        lastName: Yup.string().min(3, "last Name is too short minimum 3 Char is required").required("Last Name required"),
+        emailId: Yup.string().email('please enter valid email').required("emailId is required"),
         // gender: Yup.string().oneOf(["male", "female"], "Required").required("Required"),
         // phoneNumber: Yup.string().matches(/^[0-9]+$/, "Must be only digits").min(10, 'Please enter valid phone number')
         //     .max(10, 'Please enter 10 digits phone number without Space').required("Required"),
-        password: Yup.string().min(8, "Use 8 or more characters with a mix of letters, numbers & symbols").required("required"),
-        confirmPassword: Yup.string().oneOf([Yup.ref('password')], "Password doesn't matched").required("required")
+        password: Yup.string().min(8, "Use 8 or more characters with a mix of letters, numbers & symbols").required("Enter a password"),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password')], "Password doesn't matched").required("Confirm password should match password")
     });
 
     const onSubmit = (values, props) => {
