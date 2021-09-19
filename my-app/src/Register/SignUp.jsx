@@ -5,8 +5,11 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import './SignUp.scss'
 import { UserNode } from '../Services/userNode';
+import { useHistory } from 'react-router-dom';
+
 const userNode = new UserNode ()
 const SignUp = () => {
+    const history = useHistory();
     const initialValues = {
         firstName: '',
         lastName: '',
@@ -15,19 +18,16 @@ const SignUp = () => {
         confirmPassword: '',
     }
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().min(3, "first Name is too short minimum 3 Char is required").required("Required"),
-        lastName: Yup.string().min(3, "last Name is too short minimum 3 Char is required").required("Required"),
-        emailId: Yup.string().email('please enter valid email').required("Required"),
+        firstName: Yup.string().min(3, "first Name is too short minimum 3 Char is required").required("required"),
+        lastName: Yup.string().min(3, "last Name is too short minimum 3 Char is required").required("required"),
+        emailId: Yup.string().email('please enter valid email').required("required"),
         // gender: Yup.string().oneOf(["male", "female"], "Required").required("Required"),
         // phoneNumber: Yup.string().matches(/^[0-9]+$/, "Must be only digits").min(10, 'Please enter valid phone number')
         //     .max(10, 'Please enter 10 digits phone number without Space').required("Required"),
-        password: Yup.string().min(8, "Use 8 or more characters with a mix of letters, numbers & symbols").required("Required"),
-        confirmPassword: Yup.string().oneOf([Yup.ref('password')], "Password doesn't matched").required("Required")
+        password: Yup.string().min(8, "Use 8 or more characters with a mix of letters, numbers & symbols").required("required"),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password')], "Password doesn't matched").required("required")
     });
 
-    // const handleLogin=()=>{
-    //     history.push('/login');
-    // };
     const onSubmit = (values, props) => {
         console.log(values)
         if(values && !values.firstName && !values.lastName) return 
@@ -38,10 +38,10 @@ const SignUp = () => {
            password : values.password,
           // confirmPassword : values.confirmPassword
        }
-       console.log("Message from onSubmit", userDetails)
        userNode.registration(userDetails)
        .then(res => {
            alert('Data is submitted')
+           history.push('/login')
        }).catch(error => {
            console.log(error)
        })

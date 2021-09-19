@@ -4,23 +4,42 @@ import {Formik, Form, Field, ErrorMessage} from 'formik'
 import {Link} from 'react-router-dom'
 import * as Yup from 'yup'
 import './login.scss'
+import { useHistory } from 'react-router-dom';
+import { UserNode } from '../Services/userNode';
+const userNode = new UserNode ()
+
 const Login = (props) => {
-  const initialValues ={
+  const history = useHistory();  
+  const initialValues = {
     emailId:'',
     password:''
 } ;
 const validationSchema=Yup.object().shape({
-  emailId:Yup.string().email('please enter valid email').required("Required"),
-  password:Yup.string().required("Required")
+  emailId:Yup.string().email('please enter valid email').required("required"),
+  password:Yup.string().required("required")
 
-})
+});
+
+
 const onSubmit=(values,props)=>{
   console.log(values)
-  setTimeout(()=>{
-    props.resetForm()
-    props.setSubmitting(false)
-  },2000)
+  const userCredentials = {
+    email: values.emailId,
+    password: values.password
   };
+  userNode.login(userCredentials)
+       .then(res => {
+         localStorage.setItem('token', res.data.token);
+         alert('logging in')
+        //  setTimeout(()=> {
+          history.push('/dashboard');
+         //  props.resetForm();
+        //  }, 1000);
+       }).catch(error => {
+          console.log(error)
+      })
+    };
+
   return (
     <div>
     <Grid className="formStyle">
@@ -67,8 +86,14 @@ const onSubmit=(values,props)=>{
           fullWidth
           helperText={<ErrorMessage name="password"/>}
         />
-        <Button className="buttonMargin" color = "primary" type="submit" variant="contained"  disabled={props.isSubmitting}
-        fullWidth> {props.isSubmitting?"Loading":"Sign in"  }</Button> 
+        <Button 
+        className="buttonMargin" 
+        color = "primary" 
+        type="submit" 
+        variant="contained"  
+        //disabled={props.isSubmitting}
+        fullWidth> 
+        Sign in</Button> 
         <Typography className = "textspace">Create a new account? 
             <Link to = '/SignUp'>
             Sign Up
