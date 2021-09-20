@@ -6,6 +6,9 @@ import * as Yup from 'yup'
 import './login.scss'
 import { useHistory } from 'react-router-dom';
 import { UserNode } from '../Services/userNode';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
 const userNode = new UserNode ()
 
 const Login = (props) => {
@@ -23,6 +26,9 @@ const validationSchema=Yup.object().shape({
 
 const onSubmit=(values,props)=>{
   console.log(values)
+  toast.success('Login successfull!', {
+    position: "top-center"
+  })
   const userCredentials = {
     email: values.emailId,
     password: values.password
@@ -30,7 +36,7 @@ const onSubmit=(values,props)=>{
   userNode.login(userCredentials)
        .then(res => {
          localStorage.setItem('token', res.data.token);
-         alert('logging in')
+         
         //  setTimeout(()=> {
           history.push('/dashboard');
          //  props.resetForm();
@@ -64,7 +70,6 @@ const onSubmit=(values,props)=>{
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
           {(props)=>(
             <Form className="login-form">
-              {/* {console.log(props)} */}
         <Field 
         as={TextField}
         className="EmailFieldStyle"
@@ -94,6 +99,7 @@ const onSubmit=(values,props)=>{
         //disabled={props.isSubmitting}
         fullWidth> 
         Sign in</Button> 
+        <ToastContainer />
         <Typography className = "textspace">Create a new account? 
             <Link to = '/SignUp'>
             Sign Up
@@ -109,7 +115,7 @@ const onSubmit=(values,props)=>{
         </div>
       </Paper>
     </Grid>
-    </div>
+    </div>  
   );
 };
 

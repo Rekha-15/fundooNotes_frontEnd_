@@ -1,20 +1,51 @@
 import React from "react";
-import './dashboard.scss'
+import Navbar from "../navbar/navbar";
+import Sidebar from "../sideBar/sidebar";
 
-function Dashboard() {
-  const logo = (
-    <img
-      src="https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png"
-      alt="logo"
-    />
-  );
-  return (
-    <div className="header">
-      {logo}
-      <h1>FundooNotes </h1>
-    </div>
-  );
+class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: null,
+      drawerOpen: false,
+      allLabls: [],
+      lable: false,
+      profileImage: "",
+    };
+  }
+
+  handleDrawerOpen = () => {
+    this.setState({
+      drawerOpen: true,
+    });
+  };
+
+  handleDrawerClose = () => {
+    this.setState({
+      drawerOpen: false,
+    });
+  };
+
+    render() {
+    return (
+      <>
+        <Sidebar
+          menuOpen={this.handleDrawerOpen}
+          menuClose={this.handleDrawerClose}
+          drawerOpen={this.state.drawerOpen}
+          drawerclick={this.onclickdrawer}
+          allLabls={this.state.allLabls}
+        ></Sidebar>
+        <Navbar
+          details={this.state.item}
+          menuOpen={this.handleDrawerOpen}
+          imageUrl={this.state.profileImage}
+          changeView={this.changeView}
+        ></Navbar>
+      </>
+    );
+  }
 }
 
 
-export default Dashboard
+export default Dashboard;

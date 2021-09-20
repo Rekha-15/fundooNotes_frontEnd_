@@ -1,0 +1,19 @@
+
+.MuiDrawer-paper{
+    margin-top: 75px;
+} 
+
+.sidebar{
+    display: flex;
+}
+
+
+@media only screen and (max-width : 600px) {
+
+
+    .sidebar{
+        display: block;
+    }
+    
+  }
+
