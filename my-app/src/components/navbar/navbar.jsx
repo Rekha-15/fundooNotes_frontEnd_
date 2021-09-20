@@ -1,7 +1,7 @@
 import React from "react";
 import "../compScss/compountStyle.scss"
 import FormatAlignJustifyIcon from "@material-ui/icons/FormatAlignJustify";
-import Logo from "../../images/googleLogo";
+import Logo from "../../images/fundooLogo";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import "./navbar.scss"
