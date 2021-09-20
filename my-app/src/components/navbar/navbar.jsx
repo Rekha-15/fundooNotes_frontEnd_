@@ -17,13 +17,7 @@ class Navbar extends React.Component  {
                                 onClick={this.props.menuOpen}
                             ></FormatAlignJustifyIcon>
                         </div>
-                        <img
-                            src="https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png"
-                            alt="logo"
-                        />
-                        <div className="logo">
-                            <Logo></Logo>
-                        </div>
+                        
                     </Toolbar>
                 </AppBar>
         );
