@@ -60,7 +60,13 @@ class Cards extends React.Component {
     this.setState({ setExpanded: !this.state.setExpanded });
   };
 
-  
+  getReminder = (value) => {
+    this.setState({ reminder: value });
+    this.setState({
+      snackbarOpen: true,
+      snackbarMessage: "Note Reminder Added",
+    });
+  };
 
   labelId = (value) => {
     console.log("label id", value);
@@ -87,13 +93,7 @@ class Cards extends React.Component {
     this.setState({ expanded: false });
     this.setState({ setExpanded: false });
   };
-  archived = async () => {
-    this.setState({
-      snackbarOpen: true,
-      snackbarMessage: "Note Archived",
-    });
-    await this.setState({ isarchived: true });
-  };
+  
 
   getcolor = (value) => {
     this.setState({
