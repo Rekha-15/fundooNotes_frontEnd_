@@ -94,6 +94,13 @@ class Cards extends React.Component {
     this.setState({ setExpanded: false });
   };
   
+  archived = async () => {
+    this.setState({
+      snackbarOpen: true,
+      snackbarMessage: "Note Archived",
+    });
+    await this.setState({ isarchived: true });
+  };
 
   getcolor = (value) => {
     this.setState({
