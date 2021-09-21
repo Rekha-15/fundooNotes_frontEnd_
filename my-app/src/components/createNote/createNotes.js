@@ -19,6 +19,7 @@ import  Pin from "../../images/pinBeforeClick.svg";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import "../compScss/compountStyle.scss";
+
 import Unpinicon from "../../images/pinAfterClick(1).svg";
 
 class Cards extends React.Component {
@@ -93,7 +94,6 @@ class Cards extends React.Component {
     this.setState({ expanded: false });
     this.setState({ setExpanded: false });
   };
-  
   archived = async () => {
     this.setState({
       snackbarOpen: true,
@@ -110,14 +110,7 @@ class Cards extends React.Component {
     this.setState({ color: value });
   };
 
-  pinNote = () => {
-    this.setState({
-      snackbarOpen: true,
-      snackbarMessage: "Pinned Note",
-    });
-    this.setState({ ispined: true });
-    this.setState({ displypin: Unpinicon });
-  };
+  
 
   getId = (id) => {
     this.setState({ labelId: [id] });
