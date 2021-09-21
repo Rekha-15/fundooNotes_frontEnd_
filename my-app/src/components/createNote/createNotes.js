@@ -1,5 +1,4 @@
 import React from "react";
-import "../compScss/compountStyle.scss";
 import {
   Card,
   CardContent,
@@ -110,7 +109,14 @@ class Cards extends React.Component {
     this.setState({ color: value });
   };
 
-  
+  pinNote = () => {
+    this.setState({
+      snackbarOpen: true,
+      snackbarMessage: "Pinned Note",
+    });
+    this.setState({ ispined: true });
+    this.setState({ displypin: Unpinicon });
+  };
 
   getId = (id) => {
     this.setState({ labelId: [id] });
