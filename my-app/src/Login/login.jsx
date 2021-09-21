@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import * as Yup from 'yup'
 import './login.scss'
 import { useHistory } from 'react-router-dom';
-import { UserNode } from '../Services/userNode';
+import { UserNode } from "../Services/userAPI";
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -26,22 +26,19 @@ const validationSchema=Yup.object().shape({
 
 const onSubmit=(values,props)=>{
   console.log(values)
-  toast.success('Login successfull!', {
-    position: "top-center"
-  })
+  
   const userCredentials = {
     email: values.emailId,
     password: values.password
   };
+  
   userNode.login(userCredentials)
        .then(res => {
          localStorage.setItem('token', res.data.token);
-         
-        //  setTimeout(()=> {
           history.push('/dashboard');
-         //  props.resetForm();
-        //  }, 1000);
-       }).catch(error => {
+       })
+        // toast.success('Login successfull!')
+        .catch(error => {
           console.log(error)
       })
     };

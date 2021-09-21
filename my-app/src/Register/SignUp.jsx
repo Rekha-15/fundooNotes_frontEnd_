@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import './SignUp.scss'
-import { UserNode } from '../Services/userNode';
+import { UserNode } from '../Services/userAPI';
 import { useHistory } from 'react-router-dom';
 
 const userNode = new UserNode ()
