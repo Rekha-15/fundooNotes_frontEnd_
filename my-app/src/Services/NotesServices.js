@@ -34,7 +34,7 @@ class UserNoteServices {
     //    description: "jjshjah",
     // }
    // console.log("hddksdf",data.notesId[0]);
-   return Axios.delete(`/deleteNote/${data.notesId}`,header )
+   return Axios.delete(`/deleteNote/${data.notesId}`, data, header )
 }
 
 static getNotes =  () => {

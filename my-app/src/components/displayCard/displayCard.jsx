@@ -64,7 +64,16 @@ export default function DisplayNotes(props) {
   // { title: "title3", description: "description3" }]
 
   const Note = () => {
-    
+    console.log(' props.notes::',  props.notes);
+    return (
+      <div className="AllNotes">
+        {/* props.notes */}
+         
+        {props.notes.length &&
+          props.notes.map((data) => (
+            <div
+            key={data._id}
+              className="noteBlock"
               style={{ backgroundColor: data.color }}>
               <div className="inputBlock" onClick={(e) => dialogOpen(e, data)}>
                 <Typography className={classes.noteText} >{data.title}</Typography>
