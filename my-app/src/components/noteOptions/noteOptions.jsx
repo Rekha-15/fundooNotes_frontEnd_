@@ -102,10 +102,8 @@ export default function NoteOptions(props) {
 
   const deleted = () => {
     let data = {    
-      notesId: [noteId], 
+      notesList: [noteId], 
     };
-    console.log("dlt", data)
-    console.log("dlted",noteId)
     Services
     .deleteForever(data)
     .then((data) => {
