@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import './login.scss'
 import { useHistory } from 'react-router-dom';
 import { UserNode } from "../Services/userAPI";
-import { ToastContainer, toast } from 'react-toastify'
+//import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 const userNode = new UserNode ()
@@ -48,7 +48,7 @@ const onSubmit=(values,props)=>{
     <Grid className="formStyle">
       <Paper className="login-container login-paper">
         <div  align="center" className="login-form-container">
-          <h1 className="header">
+          <h1 className="header" data-testid="header">
             <span className="fun1">F</span>
             <span className="fun2">u</span> 
             <span className="fun3">n</span> 
@@ -62,14 +62,15 @@ const onSubmit=(values,props)=>{
             <span className="fun5">s</span>
           </h1>
           <Grid>
-            <h2>Sign in</h2>
+            <h2 data-testid="login">Sign in</h2>
           </Grid>
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
           {(props)=>(
-            <Form className="login-form">
+            <Form data-testid="form"  className="login-form">
         <Field 
         as={TextField}
         className="EmailFieldStyle"
+        data-testid="email" 
           label="email Id"
           name="emailId"
           placeholder="Enter user emailId"
@@ -80,6 +81,7 @@ const onSubmit=(values,props)=>{
         <Field 
         as={TextField}
         className="PasswordStyle"
+        data-testid="password" 
           label="Password"
           name="password"
           placeholder="Enter password"
@@ -92,11 +94,12 @@ const onSubmit=(values,props)=>{
         className="buttonMargin" 
         color = "primary" 
         type="submit" 
+        data-testid="submit" 
         variant="contained"  
         //disabled={props.isSubmitting}
         fullWidth> 
         Sign in</Button> 
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <Typography className = "textspace">Create a new account? 
             <Link to = '/SignUp'>
             Sign Up
@@ -106,9 +109,9 @@ const onSubmit=(values,props)=>{
           )
 }
         </Formik>
-        <Typography>
-          <Link href="#">Forgot password</Link>
-        </Typography>
+        {/* <Typography>
+          <Link href="#">Forgot password </Link>
+        </Typography> */}
         </div>
       </Paper>
     </Grid>
