@@ -35,6 +35,7 @@ export default function Notes(props) {
   return (
     <div className="mainContent">
       <AddNotes getall={getAllNotes} />
+      <DisplayNotes notes={notes} getall={getAllNotes} />
       <div>
       </div>
     </div>
