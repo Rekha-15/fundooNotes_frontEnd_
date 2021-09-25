@@ -29,17 +29,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function AddNote(props) {
-  const classes = useStyles();
-  var [showTitle, titleDisplay] = React.useState(props.editOpen);
-  var [title, setTitle] = React.useState(props.editTitle);
-  var [note, setNote] = React.useState(props.editDisc);
-  const [edit, setEdit] = React.useState(props.setEdited);
-  const [clr, setClr] = React.useState(props.editColor);
-  const [noteId, setNoteId] = React.useState(props.editId);
-  const [archive, setArchive] = React.useState(props.archive);
-  const [trash, setTrash] = React.useState(props.trash);
-  const[takeNote, setTakeNote] = React.useState(true);
+
 
   const clickedNote = () => {
     titleDisplay(true);
@@ -51,7 +41,63 @@ export default function AddNote(props) {
         title: title,
         description : note
      }
-      
+      Services
+        .addNote(formval)
+        .then((data) => {
+          console.log("Add Notes: " + data);
+          props.getall();
+        })
+        .catch((err) => {
+          console.log("Error = " + err);
+        });
+    let formData = new FormData();
+    if (title == undefined && note == undefined) {
+      console.log("Please Enter Data");
+      setClr("#fafafa");
+      titleDisplay(false);
+      return null;
+    }
+    formData.append("title", title);
+    console.log("title",title);
+    formData.append("description", note);
+  //   const formval = {
+  //    title: title,
+  //    description : note
+  // }
+    if (edit) {
+      //setClr(props.editColor);
+      formData.append("color", clr);
+      formData.append("noteId", noteId);
+      Services
+        .updateNotes(formData)
+        .then((data) => {
+          console.log("Update Data: " + data);
+          props.getall();
+        })
+        .catch((err) => {
+          console.log("Update Data Error = " + err);
+        });
+      titleDisplay(false);
+      props.dialogOff();
+    } 
+    else {
+    // formData.append("color", clr);
+    // console.log("addnote",formData);
+    Services
+        .addNote(formData)
+        .then((data) => {
+          console.log("Add Notes: " + data);
+          props.getall();
+        })
+        .catch((err) => {
+          console.log("Error = " + err);
+        });
+      setTitle("");
+      setNote("");
+      setClr("#fafafa");
+      titleDisplay(false);
+    }
+  };
 
   return (
     <div
