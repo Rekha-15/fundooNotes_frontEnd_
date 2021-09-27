@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Paper, TextField, Button, Typography} from "@material-ui/core";
 import {Formik, Form, Field, ErrorMessage} from 'formik'
-import {Link} from 'react-router-dom'
+import {Link, BrowserRouter as Router} from 'react-router-dom'
 import * as Yup from 'yup'
 import './login.scss'
 import { useHistory } from 'react-router-dom';
@@ -44,11 +44,12 @@ const onSubmit=(values,props)=>{
     };
 
   return (
+    <Router>
     <div>
     <Grid className="formStyle">
       <Paper className="login-container login-paper">
         <div  align="center" className="login-form-container">
-          <h1 className="header" data-testid="header">
+          <h1 className="header" data-testid="title">
             <span className="fun1">F</span>
             <span className="fun2">u</span> 
             <span className="fun3">n</span> 
@@ -70,7 +71,7 @@ const onSubmit=(values,props)=>{
         <Field 
         as={TextField}
         className="EmailFieldStyle"
-        data-testid="email" 
+         data-testid="email" 
           label="email Id"
           name="emailId"
           placeholder="Enter user emailId"
@@ -81,7 +82,7 @@ const onSubmit=(values,props)=>{
         <Field 
         as={TextField}
         className="PasswordStyle"
-        data-testid="password" 
+        data-testid="password"
           label="Password"
           name="password"
           placeholder="Enter password"
@@ -94,14 +95,14 @@ const onSubmit=(values,props)=>{
         className="buttonMargin" 
         color = "primary" 
         type="submit" 
-        data-testid="submit" 
+        data-testid="button"
         variant="contained"  
         //disabled={props.isSubmitting}
         fullWidth> 
         Sign in</Button> 
         {/* <ToastContainer /> */}
         <Typography className = "textspace">Create a new account? 
-            <Link to = '/SignUp'>
+            <Link data-testid="link" to = '/SignUp'>
             Sign Up
             </Link>
         </Typography> 
@@ -110,7 +111,7 @@ const onSubmit=(values,props)=>{
 }
         </Formik>
         <Typography>
-          <Link to = '/ForgotPass'>
+          <Link data-testid="submit" to = '/ForgotPass'>
             Forgot password
              </Link>
         </Typography>
@@ -121,6 +122,7 @@ const onSubmit=(values,props)=>{
       </Paper>
     </Grid>
     </div>  
+    </Router>
   );
 };
 
