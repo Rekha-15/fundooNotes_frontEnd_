@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React from "react";
 import clsx from "clsx";
 import "./dashboard.scss";
@@ -17,7 +18,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import SettingsSharpIcon from "@material-ui/icons/SettingsOutlined";
 import DnsRoundedIcon from "@material-ui/icons/DnsRounded";
 import ReplayOutlinedIcon from "@material-ui/icons/ReplayOutlined";
-import InputBase from "@material-ui/core/InputBase";
+//import InputBase from "@material-ui/core/InputBase";
 import ListItem from "@material-ui/core/ListItem";
 import AppsRoundedIcon from "@material-ui/icons/AppsRounded";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -130,7 +131,7 @@ export default function Dashboard(props) {
   const [editLabels, setEditLabels] = React.useState(false);
   const [achive, setAchive] = React.useState(false);
   const [trash, setTrash] = React.useState(false);
-  const [search, setSearch] = React.useState();
+  const [search] = React.useState();
  // const [searchTask, setSearchTask] = React.useState(false);
 
   const drawerOpen = () => {
@@ -239,9 +240,9 @@ export default function Dashboard(props) {
                 </IconButton>
               </div>
               <div>
-                <img className="headerIcon" src={icon} />
+                <img className="headerIcon" src={icon} alt="header" />
               </div>
-              <div className="headerTitle">Fundoo</div>
+              <div className="headerTitle">FundooNotes</div>
             </div>
 
             <div className="search">

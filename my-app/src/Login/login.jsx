@@ -109,9 +109,14 @@ const onSubmit=(values,props)=>{
           )
 }
         </Formik>
-        {/* <Typography>
-          <Link href="#">Forgot password </Link>
-        </Typography> */}
+        <Typography>
+          <Link to = '/ForgotPass'>
+            Forgot password
+             </Link>
+        </Typography>
+        {/* <div className="forgetPassword">
+              <Button color="primary" onClick={() => this.nextPath('../forgotPassword.jsx')}>Forgot password?</Button>
+            </div> */}
         </div>
       </Paper>
     </Grid>

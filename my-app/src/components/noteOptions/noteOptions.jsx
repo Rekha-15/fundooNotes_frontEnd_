@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AddAlertIcon from "@material-ui/icons/AddAlertOutlined";
@@ -50,13 +51,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NoteOptions(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorE2, setAnchorE2] = React.useState(null);
   const [noteId, setNoteId] = React.useState(props.editId);
-  const [edit, setEdit] = React.useState(props.setEdited);
-  const [archive, setArchive] = React.useState(props.archive);
-  const [trash, setTrash] = React.useState(props.trash);
+  //const [edit, setEdit] = React.useState(props.setEdited);
+  const [archive] = React.useState(props.archive);
+  const [trash] = React.useState(props.trash);
 
   const colors = [
     { color: "#fafafa" },
@@ -102,8 +103,10 @@ export default function NoteOptions(props) {
 
   const deleted = () => {
     let data = {    
-      notesList: [noteId], 
+      notesId: [noteId], 
     };
+    console.log("dlt", data)
+    console.log("dlted",noteId)
     Services
     .deleteForever(data)
     .then((data) => {
