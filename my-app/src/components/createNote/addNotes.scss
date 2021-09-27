@@ -24,41 +24,5 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.addNoteOptions{
-    display: flex;
-    flex-direction: row;
-    padding: 0px 15px 7px 15px;
-    justify-content: space-between;
-    align-items: center;
-}
-.closeNotes{
-    padding: 10px 10px 10px 10px;
-    font-size: 10px;
-    font-family: 'Google Sans',Roboto,Arial,sans-serif;
-}
-.closeNotes:hover{
-    border-radius: 5px;
-    cursor: pointer;
-}
 
-@media only screen and (max-width: 715px){
-    .addNotesMain {
-        width: 100%;
-    }
-}
-@media only screen and (max-width: 455px){
-   .noteInput{
-       width: 45%;
-   }
-}
-@media only screen and (max-width: 400px){
-   .addNoteOptions{
-       display: flex;
-       flex-direction: column;
-   }
-   .closeNotes{
-       width: 100%;
-       display: flex;
-       justify-content: flex-end;
-   }
 }
