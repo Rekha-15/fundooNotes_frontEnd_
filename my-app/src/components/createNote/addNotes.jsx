@@ -57,12 +57,12 @@ export default function AddNote(props) {
       Services
         .addNote(formval)
         .then((data) => {
-          
+          toast.success("Notes created");
           console.log("Add Notes: " + data);
           props.getall();
         })
         .catch((err) => {
-          
+          toast.error("Note not created");
           console.log("Error = " + err);
         });
     let formData = new FormData();
