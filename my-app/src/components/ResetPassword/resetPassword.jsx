@@ -16,7 +16,7 @@ export class ResetPassword extends Component {
 
     this.state = {
       password: "",
-      confirmpass: "",
+      confirmPassword: "",
       passwordError: false,
       confirmpassError: false,
       passtextType: "password",
@@ -64,7 +64,7 @@ export class ResetPassword extends Component {
     let isError = false;
     const err = this.state;
     err.passwordError = this.state.password === "" ? true : false;
-    err.confirmpassError = this.state.confirmpass === "" ? true : false;
+    err.confirmpassError = this.state.confirmPassword === "" ? true : false;
     this.setState({
       ...err,
     });
@@ -75,11 +75,10 @@ export class ResetPassword extends Component {
 
   onReset = (e) => {
     e.preventDefault();
-    console.log("val", this.validation)
     var isInvalid = this.validation();
     if (isInvalid) {
       console.log("Validation failed");
-    } else if (this.state.confirmpass === this.state.password) {
+    } else if (this.state.confirmPassword === this.state.password) {
       var url = window.location.href;
       var tokeninput = url.split("/");
       var reqToken = tokeninput[4];
@@ -87,7 +86,8 @@ export class ResetPassword extends Component {
       var requiredToken = token[0];
 
       let data = {
-        newPassword: this.state.password,
+        password: this.state.password,
+        confirmPassword: this.state.confirmPassword,
         token: requiredToken,
       };
 
@@ -160,7 +160,7 @@ export class ResetPassword extends Component {
           </div>
           <div className="reset-pass-div">
             <TextField
-              name="confirmpass"
+              name="confirmPassword"
               type={this.state.confPassTextType}
               error={this.state.confirmpassError}
               helperText={
@@ -187,7 +187,7 @@ export class ResetPassword extends Component {
             />
           </div>
 
-          {this.state.password !== this.state.confirmpass ? (
+          {this.state.password !== this.state.confirmPassword ? (
             <FormHelperText error>Password no match</FormHelperText>
           ) : null}
 
