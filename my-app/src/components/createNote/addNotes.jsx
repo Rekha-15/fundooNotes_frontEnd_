@@ -8,6 +8,8 @@ import IconButton from "@material-ui/core/IconButton";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import NoteOptions from "../noteOptions/noteOptions.jsx";
 import Services from "../../Services/NotesServices";
+import {toast, ToastContainer} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import "./addNotes.scss";
 // const service = new Services();
 
@@ -55,10 +57,12 @@ export default function AddNote(props) {
       Services
         .addNote(formval)
         .then((data) => {
+          toast.success("Notes created");
           console.log("Add Notes: " + data);
           props.getall();
         })
         .catch((err) => {
+          toast.error("Note not created");
           console.log("Error = " + err);
         });
     let formData = new FormData();
@@ -112,16 +116,16 @@ export default function AddNote(props) {
 
   return (
     <div
-      className="addNotesMain"
+      className="addNotesMain" data-testId="close"
       onClickAway={closeNote}
       style={{ backgroundColor: clr }}
     >
       <div className="notesField" onClick={clickedNote}>
         <div
-          className="addNoteField"
+          className="addNoteField" 
           style={{ display: showTitle ? "block" : "none" }}
         >
-          <div className="titleInput" className={classes.titleInput}>
+          <div className="titleInput" data-testid="title"  className={classes.titleInput}>
             <InputBase
               className={classes.input}
               placeholder="Title"
@@ -132,7 +136,7 @@ export default function AddNote(props) {
           </div>
         </div>
         <div class="simpleNoteShow">
-          <div className="noteInput">
+          <div className="noteInput" data-testid="description" >
             <InputBase
               className={classes.input}
               placeholder="Take a note..."
@@ -153,12 +157,13 @@ export default function AddNote(props) {
             </IconButton>
           </div>
         </div>
+        <ToastContainer position='top-center'/>
       </div>
       <div
         className="addNoteField"
         style={{ display: showTitle ? "block" : "none" }}
       >
-        <div className="addNoteOptions">
+        <div className="addNoteOptions" data-testid="editId">
           <NoteOptions
             setClr={setClr}
             setEdited={edit}
@@ -170,7 +175,7 @@ export default function AddNote(props) {
             takeNote={takeNote}
           />
           {trash ? " " :
-         <div className="closeNotes">  <IconButton  className={classes.closeNotes} onClick={closeNote}>
+         <div className="closeNotes" data-testid="Save">  <IconButton  className={classes.closeNotes} onClick={closeNote}>
             CLOSE
           </IconButton></div>}
         </div>

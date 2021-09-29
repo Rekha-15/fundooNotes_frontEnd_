@@ -25,8 +25,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircle';
 import { Switch } from "react-router-dom";
-import ProtectedRoutes from "../../ProtectedRoutes.js";
+import ProtectedRoutes from "../protectedRouter";
+//import { Route } from "react-router-dom";
 import Notes from "../createNote/Notes";
+//import { const history = useHistory(); } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 //import ArchiveNotes from "../archiveNotes/archiveNotes";
 // import TrashNotes from "../TrashNotes/trashNotes";
 // import SearchField from "../SearchNotes/searchNotes"
@@ -122,6 +125,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard(props) {
+  const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -139,7 +143,7 @@ export default function Dashboard(props) {
   };
 
   const nextPath = (path) => {
-    props.history.push(path);
+    history.push(path);
   };
 
   const settingHandleClick = (event) => {
@@ -219,11 +223,11 @@ export default function Dashboard(props) {
   };
 
   const logOut = () => {
-    localStorage.removeItem("fundooUserFName");
-    localStorage.removeItem("fundooUserFName");
-    localStorage.removeItem("fundooToken");
-    localStorage.removeItem("fundooUserUserId");
-    localStorage.removeItem("fundooUserEmail");
+    // localStorage.removeItem("fundooUserFName");
+    // localStorage.removeItem("fundooUserFName");
+    localStorage.removeItem("token");
+    // localStorage.removeItem("fundooUserUserId");
+    // localStorage.removeItem("fundooUserEmail");
     nextPath("../login");
   };
 

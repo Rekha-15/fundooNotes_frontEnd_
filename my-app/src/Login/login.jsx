@@ -6,8 +6,8 @@ import * as Yup from 'yup'
 import './login.scss'
 import { useHistory } from 'react-router-dom';
 import { UserNode } from "../Services/userAPI";
-//import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import {toast, ToastContainer} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const userNode = new UserNode ()
 
@@ -31,17 +31,23 @@ const onSubmit=(values,props)=>{
     email: values.emailId,
     password: values.password
   };
+  props.resetForm();
   
   userNode.login(userCredentials)
-       .then(res => {
+       .then((res) => {
          localStorage.setItem('token', res.data.token);
-          history.push('/dashboard');
-       })
+          
+          setTimeout(() => {
+            history.push('/dashboard');
+          }, 2000);
+       toast.success("Login Successfull");
         // toast.success('Login successfull!')
-        .catch(error => {
-          console.log(error)
-      })
-    };
+      }).catch(error => {
+          toast.error(error.message);
+      });
+    }
+    
+    
 
   return (
     <Router>
@@ -100,6 +106,7 @@ const onSubmit=(values,props)=>{
         //disabled={props.isSubmitting}
         fullWidth> 
         Sign in</Button> 
+        <ToastContainer position='top-center'/>
         {/* <ToastContainer /> */}
         <Typography className = "textspace">Create a new account? 
             <Link data-testid="link" to = '/SignUp'>
@@ -111,7 +118,7 @@ const onSubmit=(values,props)=>{
 }
         </Formik>
         <Typography>
-          <Link data-testid="submit" to = '/ForgotPass'>
+          <Link data-testid="submit" to = '/forgotPassword'>
             Forgot password
              </Link>
         </Typography>

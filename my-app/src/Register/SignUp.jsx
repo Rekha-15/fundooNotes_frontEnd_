@@ -6,6 +6,8 @@ import * as Yup from "yup";
 import "./SignUp.scss";
 import { UserNode } from "../Services/userAPI";
 import { useHistory } from "react-router-dom";
+// import {toast, ToastContainer} from 'react-toastify';
+// import "react-toastify/dist/ReactToastify.css";
 
 const userNode = new UserNode();
 const SignUp = () => {

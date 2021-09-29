@@ -45,6 +45,10 @@ static getNotes =  () => {
         return Axios.post('/forgotPassword',data )
     }
 
+    static resetPassword =  (data) => {
+        return Axios.post('/resetPassword',  data )
+    }
+
 }
 
 export default  UserNoteServices ;
