@@ -19,7 +19,7 @@ function App() {
         <Route exact path='/' component={Login}/>
         <Route path="/forgotPassword" component={ForgotPass} exact />
         <Route path="/resetpassword/:token" component={ResetPass} exact />
-        <ProtectedRoute path="/dashboard" component={Dashboard}></ProtectedRoute>     
+        
         <Route component={ErrorPage} /> 
         </Switch>
       </div>      
