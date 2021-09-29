@@ -40,8 +40,7 @@ const onSubmit=(values,props)=>{
           setTimeout(() => {
             history.push('/dashboard');
           }, 2000);
-       
-        // toast.success('Login successfull!')
+       toast.success("Login Successfull");
       }).catch(error => {
           toast.error(error.message);
       });
@@ -106,7 +105,7 @@ const onSubmit=(values,props)=>{
         //disabled={props.isSubmitting}
         fullWidth> 
         Sign in</Button> 
-        
+        <ToastContainer position='top-center'/>
         <Typography className = "textspace">Create a new account? 
             <Link data-testid="link" to = '/SignUp'>
             Sign Up
