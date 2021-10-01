@@ -45,8 +45,8 @@ static getNotes =  () => {
         return Axios.post('/forgotPassword',data )
     }
 
-    static resetPassword =  (data) => {
-        return Axios.post('/resetPassword',  data )
+    static resetPassword =  (data, token ) => {
+        return Axios.post('/resetPassword', data, token )
     }
 
 }

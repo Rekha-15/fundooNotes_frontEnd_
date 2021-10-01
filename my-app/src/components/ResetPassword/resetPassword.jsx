@@ -1,205 +1,192 @@
-import "./resetPassword.scss";
-import React, { Component } from "react";
+import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import show from "./show.png";
-import hide from "./hidden.png";
 import Services from "../../Services/NotesServices";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import "./resetPassword.scss";
+//const service = new Services();
 
-//const services = new UserServices();
+function Alert(props) {
+  return <MuiAlert variant="filled" {...props} />;
+}
 
-export class ResetPassword extends Component {
+export default class forgotPassword extends React.Component {
+  nextPath(path) {
+    this.props.history.push(path);
+  }
+
   constructor(props) {
     super(props);
-
     this.state = {
       password: "",
+      passwordError: "",
+      passwordFlag: false,
       confirmPassword: "",
-      passwordError: false,
-      confirmpassError: false,
-      passtextType: "password",
-      confPassTextType: "password",
-      passIcon: hide,
-      confIcon: hide,
+      confirmPasswordError: "",
+      confirmPasswordFlag: false,
+      setOpen: false,
+      open: false,
+      snackMessage: "",
+      snackType: "",
     };
   }
+  
+  token = this.props.match.params.token;
 
-  componentDidMount() {
-    document.title = "Reset Password";
-  }
-
-  showPass = (e) => {
-    if (e.target.name === "pass" && this.state.passIcon === hide) {
-      this.setState({
-        passtextType: "text",
-        passIcon: show,
-      });
-    } else if (e.target.name === "pass" && this.state.passIcon === show) {
-      this.setState({
-        passtextType: "password",
-        passIcon: hide,
-      });
-    } else if (e.target.name === "confirm" && this.state.confIcon === hide) {
-      this.setState({
-        confPassTextType: "text",
-        confIcon: show,
-      });
-    } else {
-      this.setState({
-        confPassTextType: "password",
-        confIcon: hide,
-      });
-    }
-  };
-
-  changeHandler = (e) => {
+  change = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
 
-  validation = () => {
+  validate = () => {
     let isError = false;
-    const err = this.state;
-    err.passwordError = this.state.password === "" ? true : false;
-    err.confirmpassError = this.state.confirmPassword === "" ? true : false;
+    const errors = {
+      passwordError: "",
+      passwordFlag: false,
+      confirmPasswordError: "",
+      confirmPasswordFlag: false,
+    };
+
+    if (this.state.password.length === 0) {
+      errors.passwordFlag = true;
+      errors.confirmPasswordFlag = true;
+      isError = true;
+      errors.passwordError = "Enter Password";
+    }
+
+    if (this.state.confirmPassword !== this.state.password) {
+      errors.confirmPasswordFlag = true;
+      isError = true;
+      errors.confirmPasswordError = "Passwords didn't match.";
+    }
+
     this.setState({
-      ...err,
+      ...errors,
     });
 
-    isError = err.passwordError || err.confirmpassError;
     return isError;
   };
 
-  onReset = (e) => {
+  onSubmit = (e) => {
     e.preventDefault();
-    var isInvalid = this.validation();
-    if (isInvalid) {
-      console.log("Validation failed");
-    } else if (this.state.confirmPassword === this.state.password) {
-      var url = window.location.href;
-      var tokeninput = url.split("/");
-      var reqToken = tokeninput[4];
-      var token = reqToken.substr(6);
-      var requiredToken = token;
-
-      let data = {
+    const err = this.validate();
+    var tokeninput = this.token.split("/");
+    const tokenString = tokeninput.toString();
+      var requiredToken = tokenString.substring(6);
+      var  token = requiredToken;
+      
+     // Password@12
+    if (!err) {
+      this.setState({
+        confirmPasswordFlag: false,
+        confirmPasswordError: "",
+        passwordFlag: false,
+        passwordError: "",
+        password: "",
+        confirmPassword: "",
+        
+        
+      });
+      let resetPasswordData = {
         password: this.state.password,
         confirmPassword: this.state.confirmPassword,
-        //token: requiredToken,
-      };
 
+      };
       Services
-        .resetPassword(data)
-        .then((res) => {
-          console.log("vbvhbh",res);
-          localStorage.setItem("token", res.data.notesId);
-          this.props.history.push("../login");
+        .resetPassword(resetPasswordData, token)
+        .then((result) => {
+          let obj = JSON.stringify(result);
+          console.log("Password reset successful", obj);
+          // this.setState({
+          //   snackType: "success",
+          //   snackMessage: "Password reset successful",
+          //   open: true,
+          //   setOpen: true,
+          // });
+          this.nextPath("../login");
         })
-        .catch((err) => {
-          console.log("The error:" + err);
+        .catch((error) => {
+          console.log("Password reset Failed" + error);
+          this.setState({
+            snackType: "error",
+            snackMessage: "Password reset Failed",
+            open: true,
+            setOpen: true,
+          });
         });
+    } else {
+      console.log("Reset Failed");
     }
   };
 
   render() {
     return (
-      <div className="reset-page">
-        <form onSubmit={this.onReset} className="reset-form">
-          <div className="reset-fundoo-logo">
-            <svg className="reset-fundoo-logo" height="20" width="100">
-              <text x="8" y="19" fill="blue">
-                F
-              </text>
-              <text x="22" y="19" fill="red">
-                u
-              </text>
-              <text x="36" y="19" fill="orange">
-                n
-              </text>
-              <text x="51" y="19" fill="blue">
-                d
-              </text>
-              <text x="66" y="19" fill="green">
-                o
-              </text>
-              <text x="80" y="19" fill="red">
-                o
-              </text>
-            </svg>
-            <h3 className="reset-head">Reset Password</h3>
-            <p className="reset-tag">Reset password of your fundoo account</p>
-          </div>
-          <div className="reset-pass-div">
-            <TextField
-              name="password"
-              type={this.state.passtextType}
-              error={this.state.passwordError}
-              helperText={this.state.passwordError ? "Enter password" : ""}
-              className="reset-pass-field"
-              label="password"
-              variant="outlined"
-              onChange={this.changeHandler}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <img
-                      name="pass"
-                      className="show-icon"
-                      src={this.state.passIcon}
-                      alt=""
-                      onClick={this.showPass}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-              fullWidth
-            />
-          </div>
-          <div className="reset-pass-div">
-            <TextField
-              name="confirmPassword"
-              type={this.state.confPassTextType}
-              error={this.state.confirmpassError}
-              helperText={
-                this.state.confirmpassError ? "Enter Confirm password" : ""
-              }
-              className="reset-pass-field"
-              label="confirm password"
-              variant="outlined"
-              fullWidth
-              onChange={this.changeHandler}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <img
-                      name="confirm"
-                      className="show-icon"
-                      src={this.state.confIcon}
-                      alt=""
-                      onClick={(e) => this.showPass(e)}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </div>
-
-          {this.state.password !== this.state.confirmPassword ? (
-            <FormHelperText error>Password no match</FormHelperText>
-          ) : null}
-
-          <div className="reset-btn">
-            <Button type="submit" variant="contained" color="primary">
-              Reset
-            </Button>
-          </div>
-        </form>
+      <div className="main">
+        <div elevation={0} className="page">
+          <span className="inlineTitle">
+            <b>
+              <font color="#1976d2">F</font>
+              <font color="#e53935">u</font>
+              <font color="#ffb74d">n</font>
+              <font color="#1976d2">d</font>
+              <font color="#388e3c">o</font>
+              <font color="#e53935">o</font>
+            </b>
+          </span>
+          <span className="signIn">Reset Password</span>
+          Use your Fundoo Account
+          <form className="Form">
+            <div className="inputField">
+              <TextField
+                size="small"
+                className="input"
+                label="Password"
+                type="password"
+                variant="outlined"
+                name="password"
+                value={this.state.password}
+                onChange={(e) => this.change(e)}
+                error={this.state.passwordFlag}
+                helperText={this.state.passwordError}
+              />
+            </div>
+            <div className="inputField">
+              <TextField
+                size="small"
+                className="input"
+                label="Conform"
+                variant="outlined"
+                type="password"
+                name="confirmPassword"
+                value={this.state.confirmPassword}
+                helperText={this.state.confirmPasswordError}
+                error={this.state.confirmPasswordFlag}
+                onChange={(e) => this.change(e)}
+              />
+            </div>
+            <span className="buttonFooter">
+              <div className="button">
+                <Button
+                  variant="contained"
+                  onClick={(e) => this.onSubmit(e)}
+                  color="primary"
+                >
+                  Set Password
+                </Button>
+              </div>
+            </span>
+          </form>
+        </div>
+        <div>
+          <Snackbar open={this.state.open} autoHideDuration={3000}>
+            <Alert severity={this.state.snackType}>
+              {this.state.snackMessage}
+            </Alert>
+          </Snackbar>
+        </div>
       </div>
     );
   }
 }
-
-export default ResetPassword;
